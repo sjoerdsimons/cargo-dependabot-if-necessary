@@ -46,7 +46,12 @@ fn main() -> anyhow::Result<()> {
 
     let mut deps: BTreeMap<String, UpdateStrategy> = BTreeMap::new();
     for m in manifests {
-        for (name, dep) in m.dependencies {
+        for (name, dep) in m
+            .dependencies
+            .iter()
+            .chain(m.dev_dependencies.iter())
+            .chain(m.build_dependencies.iter())
+        {
             if let Dependency::Detailed(detail) = &dep {
                 if detail.path.is_some() {
                     continue;
