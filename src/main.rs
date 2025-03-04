@@ -74,7 +74,11 @@ fn main() -> anyhow::Result<()> {
         }
     }
 
-    let dependabot_path = opts.path.join(".github/dependabot.yml");
+    let mut dependabot_path = opts.path.join(".github/dependabot.yaml");
+    if !dependabot_path.exists() {
+        dependabot_path = dependabot_path.with_extension("yml")
+    }
+
     let mut config = if let Ok(config) = std::fs::read_to_string(&dependabot_path) {
         Dependabot::from_str(&config).with_context(|| {
             format!(
