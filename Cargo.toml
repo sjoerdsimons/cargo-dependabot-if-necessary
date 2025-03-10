@@ -10,7 +10,7 @@ readme = "README.md"
 
 [dependencies]
 anyhow = "1.0.95"
-cargo_toml = "0.21.0"
+cargo_toml = "0.22.0"
 clap = { version = "4.5.29", features = ["derive"] }
 dependabot-config = "0.3.4"
 semver = "1.0.25"
