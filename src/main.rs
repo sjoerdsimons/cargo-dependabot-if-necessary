@@ -114,7 +114,7 @@ fn main() -> anyhow::Result<()> {
                     UpdateStrategy::Minor => {
                         vec![UpdateType::SemverPatch]
                     }
-                    UpdateStrategy::Patch => vec![],
+                    UpdateStrategy::Patch => return None,
                 };
                 let mut ignore = Ignore::new(name.clone());
                 ignore.update_types = Some(update_types);
