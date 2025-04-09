@@ -58,19 +58,20 @@ fn main() -> anyhow::Result<()> {
                 }
             }
             let req = VersionReq::parse(dep.try_req()?)?;
-            let comp = &req.comparators[0];
-            let strategy = if comp.major > 0 {
-                UpdateStrategy::Major
-            } else if let Some(minor) = comp.minor {
-                if minor > 0 {
-                    UpdateStrategy::Minor
+            if let Some(comp) = &req.comparators.first() {
+                let strategy = if comp.major > 0 {
+                    UpdateStrategy::Major
+                } else if let Some(minor) = comp.minor {
+                    if minor > 0 {
+                        UpdateStrategy::Minor
+                    } else {
+                        UpdateStrategy::Patch
+                    }
                 } else {
                     UpdateStrategy::Patch
-                }
-            } else {
-                UpdateStrategy::Patch
-            };
-            deps.insert(name.clone(), strategy);
+                };
+                deps.insert(name.clone(), strategy);
+            }
         }
     }
 
